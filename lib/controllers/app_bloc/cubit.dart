@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:restaurant_app/controllers/app_bloc/states.dart';
 import 'package:restaurant_app/models/dessert_model.dart';
 import 'package:restaurant_app/widgets/menu_view.dart';
@@ -16,11 +18,9 @@ class AppCubit extends Cubit<AppStates> {
 
   static AppCubit get(context) => BlocProvider.of<AppCubit>(context);
 
-
 //CurrentBottomNavIndex
   int bottomNavCurrentIndex = 0;
 
-//List of Item in TabBar
   List<String> items = [
     'Menu',
     'Offers',
@@ -28,6 +28,8 @@ class AppCubit extends Cubit<AppStates> {
     'Profile',
     'More',
   ];
+
+  List <DessertsModel> dessertsModel = [];
 
   List<Widget> bottomScreens = [
     const MenuView(),
@@ -37,44 +39,54 @@ class AppCubit extends Cubit<AppStates> {
     const MoreScreen(),
   ];
 
-
-
-  //BottomNav
   void changeBottomNav(int index) {
     bottomNavCurrentIndex = index;
     emit(ChangeBottomNavBarState());
   }
-  List <DessertsModel> dessertsModel= [];
-
- getData()async{
-     FirebaseFirestore.instance.collection('desserts')
-   .get().then((value) {
-     value.docs.forEach((element) {
-       dessertsModel.add(DessertsModel.fromJson(element.data as Map<String, dynamic>));
-     });
-     emit(GetDessertsSuccessState());
-     print(dessertsModel);
-     }).catchError((error){
-       emit(GetDessertsErrorState());
-       print(error.toString());
-     });
-   }
 
 
+  Future getData() async {
+    FirebaseFirestore.instance.collection('desserts')
+        .get().then((value) {
+      value.docs.forEach((element) {
+        dessertsModel.add(DessertsModel.fromJson(element.data()));
+      });
+      emit(GetDessertsSuccessState());
+      print(dessertsModel);
+    }).catchError((error) {
+      emit(GetDessertsErrorState());
+      print(error.toString());
+    });
+  }
 
-   // for (DocumentSnapshot doc in querySnapshot.docs) {
-   //   dessertsModel.add(DessertsModel.fromJson(doc.data()));
-   // }
-    //
+  // Future getLocation()async{
+  //    await
+  // }
+  bool ser = false;
+  late Position currentPosition;
+  Future getPosition() async {
+    ser = await Geolocator.isLocationServiceEnabled();
+    print(ser);
+    LocationPermission per;
 
+    per = await Geolocator.checkPermission();
 
-  //}).catchError((onError){
+    if (per == LocationPermission.denied) {
+      per = await Geolocator.requestPermission();
+    }
+   currentPosition = await getCurrentPosition();
+    print( "${currentPosition.latitude }' '${currentPosition.longitude}");
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+        currentPosition.latitude, currentPosition.longitude);
+    print(placemarks[0].subAdministrativeArea);
+  }
+
+  Future<Position> getCurrentPosition() async {
+
+  return await Geolocator.getCurrentPosition().then((value) => value);
 
   }
-//   res.docs.forEach((element) {
-//   dessertsModel.add(element.data());
-// });
 
 
-
+}
 

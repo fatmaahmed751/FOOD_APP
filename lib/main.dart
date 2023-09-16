@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         builder: (BuildContext context, Widget? child) {
           return MultiBlocProvider(
             providers:[
-              BlocProvider(create: (context) =>AppCubit()..getData(),
+              BlocProvider(create: (context) =>AppCubit()..getData()..getPosition(),
               ),
               BlocProvider(create: (context) =>AppLoginCubit()
               ),
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
               listener:  (context,state){},
               builder: (context,state){
                 return const MaterialApp(
-                  home: LoginScreen(),
+                  home: LayoutScreen(),
                   // initialRoute: AppRouts.initialRoute,
                   debugShowCheckedModeBanner: false,
 //routes: routes,

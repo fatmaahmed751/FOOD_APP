@@ -10,7 +10,7 @@ class PopularRestaurant extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 600.h,
+      height: 400.h,
       child: ListView.separated(
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) => offerSFood(),
@@ -25,10 +25,23 @@ class PopularRestaurant extends StatelessWidget {
         padding: const EdgeInsets.only(left: 8.0),
         child: Column(
           children: [
-            Image.asset(
-              'assets/images/choco.jpg',
-              width: double.infinity,
-              height: 193.h,
+            Card(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              elevation: 5.0,
+              margin: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 150.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  // color: Colors.orange,
+                    borderRadius: BorderRadius.circular(20)
+                ),
+                child: Image.asset(
+                  'assets/images/choco.jpg',
+                  width: double.infinity,
+                fit: BoxFit.cover,
+                ),
+              ),
             ),
             const SizedBox(
               height: 4,

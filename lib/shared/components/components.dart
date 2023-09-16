@@ -192,11 +192,13 @@ Widget defaultFormField({
     Padding(
       padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
       child: Container(
+
         width: 300,
         height: 70,
         // padding: EdgeInsets.all(8),
 
         decoration: BoxDecoration(
+          color: Colors.red,
              borderRadius: BorderRadius.circular(200),
         //  color: Colors.blueGrey[50]
         ),

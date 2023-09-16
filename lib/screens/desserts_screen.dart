@@ -17,21 +17,20 @@ class DessertsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context)=>AppCubit(),
-      child: BlocConsumer<AppCubit, AppStates>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            AppCubit cubit = AppCubit.get(context);
-             var desserts = AppCubit.get(context).dessertsModel;
-           return Scaffold(
-              body: ListView(
-                children: [
-                  const CustomAppBarTwo(
-                    title: 'Desserts',
-                  ),
-                  const SearchBarWidget(),
-                  Container(
+    return BlocConsumer<AppCubit, AppStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          AppCubit cubit = AppCubit.get(context);
+           var desserts = AppCubit.get(context).dessertsModel;
+         return Scaffold(
+            body: ListView(
+              children: [
+                const CustomAppBarTwo(
+                  title: 'Desserts',
+                ),
+                const SearchBarWidget(),
+                SingleChildScrollView(
+                  child: Container(
                     height: 600.h,
                     child: ListView.separated(
                         itemBuilder: (context, index) => dessertContainer(desserts[index]),
@@ -41,79 +40,83 @@ class DessertsScreen extends StatelessWidget {
                         ),
                         itemCount: desserts.length,
                   )
-                  )
-                ],
-              ),
-            );
+                  ),
+                )
+              ],
+            ),
+          );
 
-          }
-      )
-
+        }
     );
   }
 
   Widget dessertContainer(desserts
     //  DessertsModel dessertsModel
-      ) => Stack(
-        alignment: Alignment.bottomLeft,
-        children: [
-          Container(
-            height: 140.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: Colors.orange,
-              borderRadius: BorderRadius.circular(20)
+      ) => Card(
+    clipBehavior: Clip.antiAliasWithSaveLayer,
+    elevation: 5.0,
+    margin: const EdgeInsets.all(8.0),
+        child: Stack(
+          alignment: Alignment.bottomLeft,
+          children: [
+            Container(
+              height: 150.h,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                 // color: Colors.orange,
+                borderRadius: BorderRadius.circular(20)
+              ),
+              child:Image.network(
+                '${desserts.image}',
+                //'assets/images/choco.jpg',
+                //height: 193.h,
+                 fit: BoxFit.cover,
+              ),
             ),
-            child: Image.asset(
-              '${desserts.image}',
-              //'assets/images/choco.jpg',
-              //height: 193.h,
-               fit: BoxFit.cover,
-            ),
-          ),
 
-          // SizedBox(height: 20,),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                 Align(
-                  alignment: Alignment.bottomLeft,
-                  child: CustomText(
-                    text:  '${desserts.name}',
-                    color: Colors.white,
-                    size: AppFontSize.s18,
-                    fontWeight: AppFontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.star,
-                      size: 16,
-                      color: AppColors.kPrimaryColor,
-                    ),
-                    CustomText(
-                      text:  '${desserts.rate}',
-                      color: AppColors.kPrimaryColor,
-                      size: AppFontSize.s12,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    CustomText(
-                      text:  '${desserts.categoryName}',
+            // SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                   Align(
+                    alignment: Alignment.bottomLeft,
+                    child: CustomText(
+                      text:  '${desserts.name}',
                       color: AppColors.whiteColor,
-                      size: AppFontSize.s15,
+                      fontWeight: AppFontWeight.bold,
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.star,
+                        size: 16,
+                        color: AppColors.kPrimaryColor,
+                      ),
+                      CustomText(
+                        text:  '${desserts.rate}',
+                        color: AppColors.whiteColor,
+                        size: AppFontSize.s16,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      CustomText(
+                        text:  '${desserts.categoryName}',
+                        color: AppColors.whiteColor,
+                        size: AppFontSize.s15,
+                        fontWeight: AppFontWeight.meduim,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
 }
