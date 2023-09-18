@@ -17,6 +17,7 @@ import 'package:restaurant_app/shared/bloc_observer.dart';
 import 'package:restaurant_app/widgets/menu_categories_section.dart';
 
 import 'screens/home_screen.dart';
+import 'screens/item_details.dart';
 import 'screens/layout_screen.dart';
 import 'screens/register_screen.dart';
 import 'widgets/menu_view.dart';

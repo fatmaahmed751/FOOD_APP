@@ -190,11 +190,11 @@ Widget defaultFormField({
 
 }) =>
     Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
       child: Container(
 
         width: 300,
-        height: 70,
+        height: 60,
         // padding: EdgeInsets.all(8),
 
         decoration: BoxDecoration(

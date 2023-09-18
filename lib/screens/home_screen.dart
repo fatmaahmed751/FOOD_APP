@@ -125,9 +125,9 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 2,
-                    ),
+                    // const SizedBox(
+                    //   height: 3,
+                    // ),
                     const PopularRestaurant(),
                     const SizedBox(
                       height: 6,
@@ -148,103 +148,102 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Container(
-                      height: 300.h,
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) =>
-                            Container(
-                              height: 100,
-                              padding: const EdgeInsets.only(left: 15),
-                              child: InkWell(
-                                onTap: (){
-                                  Navigator.push(context,MaterialPageRoute(builder: (context)=>const ItemDetails()));
-                                },
-                                child: const Row(
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .baseline,
-                                    textBaseline: TextBaseline.alphabetic,
-                                    children: [
-                                      Image(
-                                        image: AssetImage(
-                                          'assets/images/order.png',
-                                        ),
-                                        height: 95,
+                    ListView.builder(
+                      shrinkWrap: true,
+
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) =>
+                          Container(
+                            height: 100,
+                            padding: const EdgeInsets.only(left: 5),
+                            child: InkWell(
+                              onTap: (){
+                                Navigator.push(context,MaterialPageRoute(builder: (context)=>const ItemDetails()));
+                              },
+                              child: const Row(
+                                  crossAxisAlignment: CrossAxisAlignment
+                                      .baseline,
+                                  textBaseline: TextBaseline.alphabetic,
+                                  children: [
+                                    Image(
+                                      image: AssetImage(
+                                        'assets/images/order.png',
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment
-                                                .start,
-                                            children: [
-                                              Text(
-                                                'King Burgers',
-                                                style:
-                                                TextStyle(
-                                                    color: Color(0xff4A4B4D),
-                                                    fontSize: 16),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Icon(
-                                                    Icons.star,
-                                                    color: Colors.deepOrange,
-                                                    size: 20,
-                                                  ),
-                                                  Text(
-                                                    '4.9',
-                                                    style: TextStyle(
-                                                        color: Colors.deepOrange,
-                                                        fontSize: 12),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 3,
-                                                  ),
-                                                  Text(
-                                                    '(124 ratings)',
-                                                    style: TextStyle(
-                                                        color: Color(0xff4A4B4D),
-                                                        fontSize: 12),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    'Burger',
-                                                    style: TextStyle(
-                                                        color: Color(0xff4A4B4D),
-                                                        fontSize: 12),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 3,
-                                                  ),
-                                                  Text(
-                                                    '.Westem Food',
-                                                    style: TextStyle(
-                                                        color: Color(0xff4A4B4D),
-                                                        fontSize: 12),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                            ]
-                                        ),
+                                      height: 95,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment
+                                              .start,
+                                          children: [
+                                            Text(
+                                              'King Burgers',
+                                              style:
+                                              TextStyle(
+                                                  color: Color(0xff4A4B4D),
+                                                  fontSize: 16),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Colors.deepOrange,
+                                                  size: 20,
+                                                ),
+                                                Text(
+                                                  '4.9',
+                                                  style: TextStyle(
+                                                      color: Colors.deepOrange,
+                                                      fontSize: 12),
+                                                ),
+                                                SizedBox(
+                                                  width: 3,
+                                                ),
+                                                Text(
+                                                  '(124 ratings)',
+                                                  style: TextStyle(
+                                                      color: Color(0xff4A4B4D),
+                                                      fontSize: 12),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Burger',
+                                                  style: TextStyle(
+                                                      color: Color(0xff4A4B4D),
+                                                      fontSize: 12),
+                                                ),
+                                                SizedBox(
+                                                  width: 3,
+                                                ),
+                                                Text(
+                                                  '.Westem Food',
+                                                  style: TextStyle(
+                                                      color: Color(0xff4A4B4D),
+                                                      fontSize: 12),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                          ]
                                       ),
-                                    ]
-                                ),
+                                    ),
+                                  ]
                               ),
                             ),
-                        itemCount: 4,
-                      ),
+                          ),
+                      itemCount: 4,
                     )
                   ]
               ),
