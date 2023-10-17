@@ -12,6 +12,19 @@ class GetDessertsLoadingState extends AppStates {}
 
 class GetDessertsErrorState extends AppStates {}
 
+class GetRecentItemsSuccessState extends AppStates {}
+
+class GetRecentItemsLoadingState extends AppStates {}
+
+class GetRecentItemsErrorState extends AppStates {}
+
+
+class GetRestaurantSuccessState extends AppStates {}
+
+class GetRestaurantLoadingState extends AppStates {}
+
+class GetRestaurantErrorState extends AppStates {}
+
 
 
 

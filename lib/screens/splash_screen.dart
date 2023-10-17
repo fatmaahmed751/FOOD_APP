@@ -7,6 +7,8 @@ import 'package:restaurant_app/shared/components/app_colors.dart';
 import 'package:restaurant_app/shared/components/components.dart';
 import 'package:restaurant_app/screens/first_page.dart';
 
+import 'on_board_screen.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -22,7 +24,7 @@ try {
   print('hhhhhhhhhhhhhh');
    Future.delayed(const Duration(seconds: 2), () {
     Navigator.pushReplacement(
-         context, MaterialPageRoute(builder: (_) => FirstPage()));
+         context, MaterialPageRoute(builder: (_) => OnBoardingScreen()));
     print('object');
    });
 }catch(e){

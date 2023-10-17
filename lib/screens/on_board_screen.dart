@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/shared/components/app_colors.dart';
 import 'package:restaurant_app/shared/components/components.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import 'first_page.dart';
 class OnBoardingModel{
   final String image;
   final String text;
@@ -13,24 +16,31 @@ class OnBoardingModel{
   });
 }
 
-class OnBoardingScreen extends StatelessWidget {
+class OnBoardingScreen extends StatefulWidget {
+  @override
+  State<OnBoardingScreen> createState() => _OnBoardingScreenState();
+}
+
+class _OnBoardingScreenState extends State<OnBoardingScreen> {
   var boardController = PageController();
+
   List<OnBoardingModel> onBoarding = [
     OnBoardingModel(
-        image: 'assets/images/Find food you l.png',
+        image: 'assets/images/onboarding1.png',
         text: 'Find Food You Love',
         subText: 'Discover the best foods from over 1,000 restaurants and fast delivery to your doorstep'
     ),
     OnBoardingModel(
-        image: 'assets/images/delivery.png',
+        image: 'assets/images/onboarding2.png',
         text: 'Fast Delivery',
         subText: 'Fast food delivery to your home, office wherever you are'
     ),
     OnBoardingModel(
-        image: 'assets/images/live.png',
+        image: 'assets/images/onboarding3.png',
         text: 'Live Tracking',
         subText: 'Real time tracking of your food on the app once you placed the order'),
   ];
+  bool isLast = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,26 +48,43 @@ class OnBoardingScreen extends StatelessWidget {
       body: SafeArea(
           child: PageView.builder(
             controller: boardController,
+            onPageChanged: (int index){
+              if(index == onBoarding.length-1)
+              {
+                setState(() {
+                  isLast= true;
+                });
+              }else{
+                isLast= false;
+              }
+            },
             itemBuilder: (context, index) =>
-                onBoardingWidget(onBoarding[index]),
+                onBoardingWidget(onBoarding[index],context),
             itemCount: onBoarding.length,)
       ),
     );
   }
 
-  Widget onBoardingWidget(OnBoardingModel model) =>
+  Widget onBoardingWidget(OnBoardingModel model,context) =>
       Padding(
-        padding: const EdgeInsets.all(25.0),
+        padding: const EdgeInsets.only(left: 35.0,right:10),
         child: Column(
           children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: TextButton(onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder:(context)=>FirstPage()));
+              }, child: Text('SkIP',
+              style: TextStyle(color: AppColors.kPrimaryColor),)),
+            ),
             Image(image: AssetImage("${model.image}"),
             ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 20,),
             SmoothPageIndicator(
         controller: boardController,
-        count: 3,
+        count: onBoarding.length,
         axisDirection: Axis.horizontal,
-        effect: ScrollingDotsEffect(
+        effect: const ScrollingDotsEffect(
             spacing:  8.0,
             radius:  4.0,
             dotWidth:  8.0,
@@ -68,14 +95,14 @@ class OnBoardingScreen extends StatelessWidget {
             activeDotColor:  Colors.deepOrange
         ),
       ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             screenText(
                 text: '${model.text}',
                 fontWeight: FontWeight.w400,
                 fontSize: 26,
-                color: Color(0xff4a4b4d)
+                color: const Color(0xff4a4b4d)
             ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             Container(
               width: 272,
               height: 52,
@@ -85,12 +112,12 @@ class OnBoardingScreen extends StatelessWidget {
                   text: "${model.subText} ",
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xff7c7d7e),
+                  color: const Color(0xff7c7d7e),
                 ),
               ),
             ),
-            SizedBox(height: 30,),
-           // orangeButton(text: 'Next'),
+            const SizedBox(height: 30,),
+            //orangeButton(text: 'Next', function:(){}),
           ],
         ),
       );

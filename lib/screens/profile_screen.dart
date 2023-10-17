@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:restaurant_app/controllers/app_bloc/cubit.dart';
 import 'package:restaurant_app/controllers/app_bloc/states.dart';
 import 'package:restaurant_app/shared/components/app_colors.dart';
@@ -37,9 +38,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Center(
                 child: CircleAvatar(
+                  backgroundColor: Colors.black12,
                     radius: 50,
                     child: Stack(alignment: Alignment.bottomRight, children: [
-                      Image(image: AssetImage('assets/images/logo.png')),
+                     // Image(image: AssetImage('assets/images/logo.png')),
+                SvgPicture.asset("assets/images/svg_images/man.svg",
+                width: 50,),
                       IconButton(
                           onPressed: () {},
                           icon: Icon(Icons.camera_alt_outlined))

@@ -5,7 +5,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:restaurant_app/controllers/app_bloc/states.dart';
 import 'package:restaurant_app/models/dessert_model.dart';
+import 'package:restaurant_app/models/recent_items_model.dart';
 import 'package:restaurant_app/widgets/menu_view.dart';
+import '../../models/restaurant_model.dart';
 import '../../screens/home_screen.dart';
 import '../../screens/more_screen.dart';
 import '../../screens/offers_screen.dart';
@@ -24,13 +26,14 @@ class AppCubit extends Cubit<AppStates> {
   List<String> items = [
     'Menu',
     'Offers',
-    ' ',
+    'Home',
     'Profile',
     'More',
   ];
 
   List <DessertsModel> dessertsModel = [];
-
+  List <RecentItemModel> recentModel = [];
+  List <RestaurantModel> restaurantModel = [];
   List<Widget> bottomScreens = [
     const MenuView(),
     const OffersScreen(),
@@ -58,7 +61,32 @@ class AppCubit extends Cubit<AppStates> {
       print(error.toString());
     });
   }
-
+  Future getRestaurant() async {
+    FirebaseFirestore.instance.collection('restaurants')
+        .get().then((value) {
+      value.docs.forEach((element) {
+        restaurantModel.add(RestaurantModel.fromJson(element.data()));
+      });
+      emit(GetRestaurantSuccessState());
+      print(restaurantModel.length);
+    }).catchError((error) {
+      emit(GetRestaurantErrorState());
+      print(error.toString());
+    });
+  }
+  Future getRecentItems() async {
+    FirebaseFirestore.instance.collection('recent_items')
+        .get().then((value) {
+      value.docs.forEach((element) {
+        recentModel.add(RecentItemModel.fromJson(element.data()));
+      });
+      emit(GetRecentItemsSuccessState());
+      print(recentModel);
+    }).catchError((error) {
+      emit(GetRecentItemsErrorState());
+      print(error.toString());
+    });
+  }
   // Future getLocation()async{
   //    await
   // }

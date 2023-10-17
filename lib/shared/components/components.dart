@@ -61,7 +61,7 @@ Widget defaultButton({
           //  const Color.fromRGBO(252,96 ,17 ,80 ) ,
           border: Border.all(
             width: 1.0,
-            color:color
+            color:AppColors.kPrimaryColor
           ),
           borderRadius: BorderRadius.circular(25)),
       clipBehavior: Clip.hardEdge,
@@ -198,7 +198,7 @@ Widget defaultFormField({
         // padding: EdgeInsets.all(8),
 
         decoration: BoxDecoration(
-          color: Colors.red,
+        //  color: Colors.red,
              borderRadius: BorderRadius.circular(200),
         //  color: Colors.blueGrey[50]
         ),

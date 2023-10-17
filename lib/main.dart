@@ -19,8 +19,11 @@ import 'package:restaurant_app/widgets/menu_categories_section.dart';
 import 'screens/home_screen.dart';
 import 'screens/item_details.dart';
 import 'screens/layout_screen.dart';
+import 'screens/new.dart';
+import 'screens/offers_screen.dart';
 import 'screens/register_screen.dart';
 import 'widgets/menu_view.dart';
+import 'widgets/popular_restaurant.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +45,7 @@ class MyApp extends StatelessWidget {
         builder: (BuildContext context, Widget? child) {
           return MultiBlocProvider(
             providers:[
-              BlocProvider(create: (context) =>AppCubit()..getData()..getPosition(),
+              BlocProvider(create: (context) =>AppCubit()..getData()..getRestaurant()..getRecentItems()..getPosition(),
               ),
               BlocProvider(create: (context) =>AppLoginCubit()
               ),

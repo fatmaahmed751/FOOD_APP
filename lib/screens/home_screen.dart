@@ -13,24 +13,36 @@ import 'package:restaurant_app/widgets/popular_restaurant.dart';
 import 'package:restaurant_app/widgets/search_bar.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../widgets/popular_restaurant.dart';
+import '../widgets/popular_restaurant.dart';
+import 'new.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit,AppStates>(
-      listener: (context, state){},
-      builder: (context, state) {
-        AppCubit cubit = AppCubit.get(context);
+    return BlocConsumer<AppCubit, AppStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          AppCubit cubit = AppCubit.get(context);
+          var recentItems = AppCubit
+              .get(context)
+              .recentModel;
+          var restaurants = AppCubit
+              .get(context)
+              .restaurantModel;
 
-        return Scaffold(
-            body: SingleChildScrollView(
+          return Scaffold(
+            body:
+            SingleChildScrollView(
               child: Column(
                 //  scrollDirection = Axis.vertical,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+
                     const CustomAppBar(
                       title: 'Good Morning Fatma!',
                     ),
@@ -60,11 +72,12 @@ class HomeScreen extends StatelessWidget {
                               ),
                               Center(
                                 child: IconButton(
-                                  onPressed: ()async {
-                                 await cubit.getPosition();
+                                  onPressed: () async {
+                                    await cubit.getPosition();
                                   },
                                   icon: Icon(Icons.arrow_drop_down_sharp,
-                                      size: 30, color: AppColors.kPrimaryColor),
+                                      size: 30,
+                                      color: AppColors.kPrimaryColor),
                                 ),
                               ),
                             ],
@@ -75,6 +88,7 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
+
                     const SearchBarWidget(),
                     Container(
                       height: 115,
@@ -128,7 +142,20 @@ class HomeScreen extends StatelessWidget {
                     // const SizedBox(
                     //   height: 3,
                     // ),
-                    const PopularRestaurant(),
+                   // const popularRestaurant(),
+              Container(
+                //color:Colors.red,
+                //height:MediaQuery.of(context).size.height,
+                 //height: 900.h,
+                child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) => offerSFood(restaurants[index]),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 9,
+                    ),
+                    itemCount: restaurants.length),
+              ),
                     const SizedBox(
                       height: 6,
                     ),
@@ -148,110 +175,240 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    ListView.builder(
-                      shrinkWrap: true,
+                    //New(),
+                    Container(
+                      // height: 500,
+                      child: ListView.builder(
+                        shrinkWrap: true,
 
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) =>
-                          Container(
-                            height: 100,
-                            padding: const EdgeInsets.only(left: 5),
-                            child: InkWell(
-                              onTap: (){
-                                Navigator.push(context,MaterialPageRoute(builder: (context)=>const ItemDetails()));
-                              },
-                              child: const Row(
-                                  crossAxisAlignment: CrossAxisAlignment
-                                      .baseline,
-                                  textBaseline: TextBaseline.alphabetic,
-                                  children: [
-                                    Image(
-                                      image: AssetImage(
-                                        'assets/images/order.png',
-                                      ),
-                                      height: 95,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment
-                                              .start,
-                                          children: [
-                                            Text(
-                                              'King Burgers',
-                                              style:
-                                              TextStyle(
-                                                  color: Color(0xff4A4B4D),
-                                                  fontSize: 16),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.star,
-                                                  color: Colors.deepOrange,
-                                                  size: 20,
-                                                ),
-                                                Text(
-                                                  '4.9',
-                                                  style: TextStyle(
-                                                      color: Colors.deepOrange,
-                                                      fontSize: 12),
-                                                ),
-                                                SizedBox(
-                                                  width: 3,
-                                                ),
-                                                Text(
-                                                  '(124 ratings)',
-                                                  style: TextStyle(
-                                                      color: Color(0xff4A4B4D),
-                                                      fontSize: 12),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'Burger',
-                                                  style: TextStyle(
-                                                      color: Color(0xff4A4B4D),
-                                                      fontSize: 12),
-                                                ),
-                                                SizedBox(
-                                                  width: 3,
-                                                ),
-                                                Text(
-                                                  '.Westem Food',
-                                                  style: TextStyle(
-                                                      color: Color(0xff4A4B4D),
-                                                      fontSize: 12),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                          ]
-                                      ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                          ),
-                      itemCount: 4,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) =>
+                            recentItemsContainer(recentItems[index], context),
+                        itemCount: recentItems.length,
+                      ),
                     )
                   ]
               ),
-            )
-        );
 
-      }
+            ),
+          );
+        }
     );
-  //  );
+    //  );
   }
-}
+  Widget popularRestaurant(restaurants)=> Container(
+    //color:Colors.red,
+    //height:MediaQuery.of(context).size.height,
+    // height: 900.h,
+    child: ListView.separated(
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, index) => offerSFood(restaurants[index]),
+        separatorBuilder: (context, index) => const SizedBox(
+          height: 9,
+        ),
+        itemCount: restaurants.length),
+  );
+
+  Widget offerSFood(restaurants) => Padding(
+        padding: const EdgeInsets.only(left: 0.0,bottom:0,right: 0),
+        child: Column(
+          children: [
+            Card(
+              //clipBehavior: Clip.antiAliasWithSaveLayer,
+              elevation: 5.0,
+              margin: const EdgeInsets.only(bottom:10.0),
+              child: Container(
+                height: 150.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  // color: Colors.yellow,
+
+                  // color: Colors.orange,
+                    borderRadius: BorderRadius.circular(20)
+                ),
+                child: Image.network(
+                  '${restaurants.image}',
+                  // width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: CustomText(
+                  text: '${restaurants.name}',
+                  color: Colors.black,
+                  size: AppFontSize.s18,
+                  fontWeight: AppFontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 7,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 8.0),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.star,
+                    size: 16,
+                    color: AppColors.kPrimaryColor,
+                  ),
+                  CustomText(
+                    text: '${restaurants.rate}',
+                    color: AppColors.kPrimaryColor,
+                    size: AppFontSize.s12,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  CustomText(
+                    text: '(${restaurants.rateNumber})',
+                    color: AppColors.lightGrey,
+                    size: AppFontSize.s15,
+                  ),
+                  const SizedBox(
+                    width: 3,
+                  ),
+                  CustomText(
+                    text: '${restaurants.type}',
+                    color: AppColors.lightGrey,
+                    size: AppFontSize.s15,
+                  ),
+                  const SizedBox(
+                    width: 3,
+                  ),Container(
+                    width: 3,
+                    height: 3,
+                    decoration: BoxDecoration(
+                        color: AppColors.kPrimaryColor,
+                        borderRadius: BorderRadius.circular(20)),
+                  ),
+                  const SizedBox(
+                    width: 3,
+                  ),
+                  CustomText(
+                    text: '${restaurants.categoryName}',
+                    color: AppColors.lightGrey,
+                    size: AppFontSize.s15,
+                  ),
+
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+
+
+    Widget recentItemsContainer(recentItems, context) =>
+        Container(
+          height: 100,
+          padding: const EdgeInsets.only(left: 5),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const ItemDetails()));
+            },
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment
+                    .baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  Card(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                    child: Container(
+                      height: 100,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+
+                      ),
+                      child: Image.network(
+                        '${recentItems.image}',
+                        fit: BoxFit.cover,
+                        //  height: 95,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment
+                            .start,
+                        children: [
+                          Text(
+                            '${recentItems.name}',
+                            style:
+                            const TextStyle(
+                                color: Color(0xff4A4B4D),
+                                fontSize: 16),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                           Row(
+                            children: [
+                              const Icon(
+                                Icons.star,
+                                color: Colors.deepOrange,
+                                size: 20,
+                              ),
+                              Text(
+                                '${recentItems.rate}',
+                                style: const TextStyle(
+                                    color: Colors.deepOrange,
+                                    fontSize: 12),
+                              ),
+                              const SizedBox(
+                                width: 3,
+                              ),
+                              const Text(
+                                '(124 ratings)',
+                                style: TextStyle(
+                                    color: Color(0xff4A4B4D),
+                                    fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                           Row(
+                            children: [
+                              const Text(
+                                'Burger',
+                                style: TextStyle(
+                                    color: Color(0xff4A4B4D),
+                                    fontSize: 12),
+                              ),
+                              const SizedBox(
+                                width: 3,
+                              ),
+                              Text(
+                                '${recentItems.categoryName}',
+                                style: const TextStyle(
+                                    color: Color(0xff4A4B4D),
+                                    fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                        ]
+                    ),
+                  ),
+                ]
+            ),
+          )
+        );
+  }

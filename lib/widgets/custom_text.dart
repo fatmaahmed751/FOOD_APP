@@ -8,7 +8,7 @@ class CustomText extends StatelessWidget {
   final TextOverflow? textOverflow;
   final FontWeight? fontWeight;
   final TextAlign? textAlign;
-  final bool underline;
+ // final bool underline;
   final TextStyle? textStyle;
 
   const CustomText({
@@ -22,7 +22,7 @@ class CustomText extends StatelessWidget {
     this.heigtText,
     this.textAlign,
     this.textStyle,
-    this.underline = false,
+   // this.underline = false,
   }) : super(key: key);
 
   @override
@@ -34,7 +34,7 @@ class CustomText extends StatelessWidget {
       textAlign: textAlign,
       style: textStyle ??
           TextStyle(
-            decoration: (!underline) ? null : TextDecoration.underline,
+           // decoration: (!underline) ? null : TextDecoration.underline,
             color: color,
             fontSize: size,
             fontWeight: fontWeight,

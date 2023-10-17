@@ -24,21 +24,21 @@ class LayoutScreen extends StatelessWidget {
           var bottomNavCurrentIndex = cubit.bottomNavCurrentIndex;
           return Scaffold(
            // backgroundColor: AppColors.backgroundColor,
-            floatingActionButton: FloatingActionButton(
-              backgroundColor: bottomNavCurrentIndex == 2
-                  ? AppColors.kPrimaryColor
-                  : AppColors.labelColor,
-              foregroundColor: Colors.white,
-              onPressed: () {
-                cubit.changeBottomNav(2);
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: SvgPicture.asset("assets/images/svg_images/home.svg"),
-              ),
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
+           //  floatingActionButton: FloatingActionButton(
+           //    backgroundColor: bottomNavCurrentIndex == 2
+           //        ? AppColors.kPrimaryColor
+           //        : AppColors.labelColor,
+           //    foregroundColor: Colors.white,
+           //    onPressed: () {
+           //      cubit.changeBottomNav(2);
+           //    },
+           //    child: Padding(
+           //      padding: const EdgeInsets.all(15.0),
+           //      child: SvgPicture.asset("assets/images/svg_images/home.svg"),
+           //    ),
+           //  ),
+           //  floatingActionButtonLocation:
+           //      FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: BottomAppBar(
               clipBehavior: Clip.antiAliasWithSaveLayer,
               shape: const CircularNotchedRectangle(),
@@ -70,8 +70,16 @@ class LayoutScreen extends StatelessWidget {
                     ),
                     label: 'Offers',
                   ),
-                  const BottomNavigationBarItem(
-                      icon: Icon(Icons.circle), label: ''),
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset("assets/images/svg_images/home.svg",
+                      color: cubit.bottomNavCurrentIndex == 2
+                          ? AppColors.kPrimaryColor
+                          : AppColors.labelColor,
+                    ),
+                    label: 'home',
+                  ),
+                  // const BottomNavigationBarItem(
+                  //     icon: Icon(Icons.circle), label: ''),
                   BottomNavigationBarItem(
                     icon: SvgPicture.asset("assets/images/svg_images/man.svg",
                       color: cubit.bottomNavCurrentIndex == 3
@@ -91,10 +99,11 @@ class LayoutScreen extends StatelessWidget {
                 ],
               ),
             ),
-            body: IndexedStack(
-              index: bottomNavCurrentIndex,
-              children: cubit.bottomScreens,
-            ),
+            body: cubit.bottomScreens[cubit.bottomNavCurrentIndex]
+            // IndexedStack(
+            //   index: bottomNavCurrentIndex,
+            //   children: cubit.bottomScreens,
+            // ),
           );
         },
       ),
