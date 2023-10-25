@@ -31,7 +31,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         subText: 'Discover the best foods from over 1,000 restaurants and fast delivery to your doorstep'
     ),
     OnBoardingModel(
-        image: 'assets/images/onboarding2.png',
+        image: 'assets/images/svg_images/de.png',
         text: 'Fast Delivery',
         subText: 'Fast food delivery to your home, office wherever you are'
     ),
@@ -67,17 +67,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   Widget onBoardingWidget(OnBoardingModel model,context) =>
       Padding(
-        padding: const EdgeInsets.only(left: 35.0,right:10),
+        padding: const EdgeInsets.only(left:20.0,right:10),
         child: Column(
           children: [
             Align(
               alignment: Alignment.topRight,
               child: TextButton(onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder:(context)=>FirstPage()));
-              }, child: Text('SkIP',
+              }, child: Text('SKIP',
               style: TextStyle(color: AppColors.kPrimaryColor),)),
             ),
-            Image(image: AssetImage("${model.image}"),
+            Container(
+              height:onBoarding.length == 1?300 :400,
+              child: Image(image: AssetImage("${model.image}"),
+              ),
             ),
             const SizedBox(height: 20,),
             SmoothPageIndicator(

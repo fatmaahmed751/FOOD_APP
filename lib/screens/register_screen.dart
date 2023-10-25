@@ -159,7 +159,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 if (formKey.currentState!.validate()) {
                                   registerModel=UserRegisterModel(
                                     email:emailController.text,
-                                    password: passwordController.text
+                                    password: passwordController.text,
+                                     // uId:'',
                                   );
                                   cubit.firebaseAuthenticate(registerModel!);
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=>LayoutScreen()));

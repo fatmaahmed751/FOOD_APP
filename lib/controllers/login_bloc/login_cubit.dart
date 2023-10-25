@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_app/controllers/login_bloc/login_state.dart';
 import 'package:restaurant_app/models/user_login_model.dart';
 import 'package:restaurant_app/screens/layout_screen.dart';
+
+import '../../models/register_model.dart';
+import '../register_cubit/register_state.dart';
 
 class AppLoginCubit extends Cubit<LoginStates>{
   AppLoginCubit() :super(AppLoginInitialState());
@@ -22,18 +26,20 @@ Future<UserLoginModel> firebaseAuthenticate(BuildContext context,UserLoginModel 
 )async{
   try {
     print(model.email);
- final response=  await auth.signInWithEmailAndPassword(
+ var response=  await auth.signInWithEmailAndPassword(
           email: model.email,
           password: model.password
-
-        //print('jjjjjjjjjjjj');
-      );
+ );
 
  emit(AppLoginSuccessState());
       print(auth.currentUser!.email);
       print(auth.currentUser!.uid);
         print('jjjjjjjjjjjj');
-
+       // saveUserData(response);
+   var user = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(response.user?.uid)
+        .get();
   }
    on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {

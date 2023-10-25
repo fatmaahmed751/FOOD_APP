@@ -177,7 +177,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     //New(),
                     Container(
-                      // height: 500,
+                       height: 500,
                       child: ListView.builder(
                         shrinkWrap: true,
 
@@ -310,12 +310,17 @@ class HomeScreen extends StatelessWidget {
 
     Widget recentItemsContainer(recentItems, context) =>
         Container(
+         // color: Colors.red,
           height: 100,
           padding: const EdgeInsets.only(left: 5),
           child: GestureDetector(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const ItemDetails()));
+                  MaterialPageRoute(builder: (context) =>  ItemDetails(
+                    image: '${recentItems.image}',
+                    rate:   '${recentItems.rate}',
+                    recipeName:'${recentItems.name}',
+                  )));
             },
             child: Row(
                 crossAxisAlignment: CrossAxisAlignment

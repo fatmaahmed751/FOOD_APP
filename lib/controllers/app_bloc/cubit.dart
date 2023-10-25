@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
@@ -10,6 +11,7 @@ import 'package:restaurant_app/widgets/menu_view.dart';
 import '../../models/restaurant_model.dart';
 import '../../screens/home_screen.dart';
 import '../../screens/more_screen.dart';
+import '../../screens/my_order_screen.dart';
 import '../../screens/offers_screen.dart';
 import '../../screens/profile_screen.dart';
 
@@ -26,7 +28,7 @@ class AppCubit extends Cubit<AppStates> {
   List<String> items = [
     'Menu',
     'Offers',
-    'Home',
+    ' ',
     'Profile',
     'More',
   ];
@@ -74,6 +76,7 @@ class AppCubit extends Cubit<AppStates> {
       print(error.toString());
     });
   }
+
   Future getRecentItems() async {
     FirebaseFirestore.instance.collection('recent_items')
         .get().then((value) {
@@ -87,6 +90,14 @@ class AppCubit extends Cubit<AppStates> {
       print(error.toString());
     });
   }
+
+  Future getNotification()async{
+    String? myToken = await FirebaseMessaging.instance.getToken();
+    print('=====================================');
+    print(myToken);
+    //Navigator.push(context, MaterialPageRoute(builder: (context)=>MyOrderScreen()));
+}
+
   // Future getLocation()async{
   //    await
   // }
