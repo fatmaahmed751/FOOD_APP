@@ -18,6 +18,12 @@ class GetRecentItemsLoadingState extends AppStates {}
 
 class GetRecentItemsErrorState extends AppStates {}
 
+class GetMyOrderSuccessState extends AppStates {}
+
+class GetMyOrderLoadingState extends AppStates {}
+
+class GetMyOrderErrorState extends AppStates {}
+
 
 class GetRestaurantSuccessState extends AppStates {}
 

@@ -11,8 +11,10 @@ class CustomAppBarTwo extends StatelessWidget {
     return Padding(
       padding:
       EdgeInsets.only(top:5.h, bottom: 10.h, right: 20.w),
+
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
+        //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(onPressed: (){
             Navigator.pop(context);
@@ -29,6 +31,7 @@ class CustomAppBarTwo extends StatelessWidget {
               icon: const Icon(
                 Icons.shopping_cart,
                 size: 22,
+              //  color: Colors.white,
               ))
 
         ],

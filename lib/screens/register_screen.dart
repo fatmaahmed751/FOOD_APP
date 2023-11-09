@@ -99,7 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   color: AppColors.kPrimaryColor,),
                                 labelText: ('Email'),
 
-                                type:TextInputType.text,
+                                type:TextInputType.emailAddress,
                                 controller:emailController,
                                 hintText: 'Email',
                                 // onChanged: (data){
@@ -112,8 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 prefixIcon:  Icon(Icons.phone_android_outlined,
                                   color: AppColors.kPrimaryColor,),
                                 labelText: ('Mobile'),
-
-                                type:TextInputType.text,
+                                type:TextInputType.phone,
                                 controller:phoneController,
                                 hintText: 'Mobile No'),
 

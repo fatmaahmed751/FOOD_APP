@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,12 +13,55 @@ import 'package:restaurant_app/widgets/custom_text.dart';
 import 'package:restaurant_app/widgets/popular_restaurant.dart';
 import 'package:restaurant_app/widgets/search_bar.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:carousel_slider/carousel_controller.dart';
 
 import '../widgets/popular_restaurant.dart';
 import '../widgets/popular_restaurant.dart';
+import 'carousal_widget_model.dart';
 import 'new.dart';
 
+class CarousalModel
+{
+  final String image;
+  final String text;
 
+  CarousalModel
+      ({
+    required this.image,
+    required this.text,
+  });
+}
+class CarousalScreen extends StatefulWidget {
+  @override
+  State<CarousalScreen> createState() => _CarousalScreenState();
+}
+
+class _CarousalScreenState extends State<CarousalScreen> {
+
+  List<CarousalModel> caro = [
+    CarousalModel
+      (
+      image: 'assets/images/it.jpg',
+      text: 'Italian',
+    ),
+    CarousalModel
+      (
+      image: 'assets/images/ko.jpg',
+      text: 'Korean',
+    ),
+    CarousalModel
+      (
+      image: 'assets/images/rom.jpg',
+      text: 'England',
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+
+  }
+}
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -33,7 +77,7 @@ class HomeScreen extends StatelessWidget {
           var restaurants = AppCubit
               .get(context)
               .restaurantModel;
-
+         // CarousalModel model= CarousalModel(image:'',text:'');
           return Scaffold(
             body:
             SingleChildScrollView(
@@ -85,40 +129,87 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    // const SizedBox(
+                    //   height: 5,
+                    // ),
 
                     const SearchBarWidget(),
+                    CarouselSlider(items:  [
                     Container(
-                      height: 115,
-                      // color: Colors.yellow,
-                      child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) =>
-                              Container(
-                                // width: 254,
-                                height: 100,
-                                // padding: const EdgeInsets.only(left:7),
-                                child: const Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  // textBaseline: TextBaseline.alphabetic,
-                                  children: [
-                                    Image(
-                                      image: AssetImage(
-                                        'assets/images/order.png',
-                                      ),
-                                      height: 95,
-                                    ),
-                                    Text('italian')
-                                  ],
-                                ),
-                              ),
-                          separatorBuilder: (context, index) =>
-                          const SizedBox(
-                            width: 3,
-                          ),
-                          itemCount: 6),
+
+                    decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15)
+
+            ),
+            child: Column(
+              children: [
+                Image.asset('assets/images/it.jpg',
+                  width: 300.w,
+                  height: 250.h,
+                  fit: BoxFit.cover,),
+               // Text('Italian')
+              ],
+            ),
+
+          ),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        child: Column(
+                          children: [
+                            Image.asset('assets/images/com.jpg',
+                              width: 300.w,
+                              height: 250.h,
+                              fit: BoxFit.cover,),
+                            //Text('')
+                          ],
+                        ),
+
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        child: Column(
+                          children: [
+                            Image.asset('assets/images/ko.jpg',
+                              width: 300.w,
+                              height: 250.h,
+                              fit: BoxFit.cover,),
+                            //Text('Korean')
+                          ],
+                        ),
+
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        child: Column(
+                          children: [
+                            Image.asset('assets/images/rom.jpg',
+                              width: 300,
+                              height: 250.h,
+                              fit: BoxFit.cover,),
+                          //  Text('Roma')
+                          ],
+                        ),
+
+                      ),
+                      // scrollCategory(model),
+                    ], options: CarouselOptions(
+                        height: 280,
+                        enableInfiniteScroll: true,
+                        initialPage: 0,
+                        reverse: false,
+                        autoPlay: true,
+                        autoPlayInterval: const Duration(seconds: 3),
+                        autoPlayAnimationDuration: const Duration(seconds:1),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        scrollDirection: Axis.horizontal,
+                         viewportFraction: 1.0
+                    ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -139,10 +230,7 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // const SizedBox(
-                    //   height: 3,
-                    // ),
-                   // const popularRestaurant(),
+
               Container(
                 //color:Colors.red,
                 //height:MediaQuery.of(context).size.height,
@@ -157,15 +245,15 @@ class HomeScreen extends StatelessWidget {
                     itemCount: restaurants.length),
               ),
                     const SizedBox(
-                      height: 6,
+                      height: 15,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 8.0, left: 8),
+                      padding: const EdgeInsets.only(right: 15.0, left: 8),
                       child: Row(
                         children: [
                           CustomText(text: 'Recent Items',
                             color: AppColors.blackColor,
-                            fontWeight: AppFontWeight.meduim,
+                            fontWeight: AppFontWeight.bold,
                             size: AppFontSize.s18,),
                           const Spacer(),
                           CustomText(text: 'View All',
@@ -177,7 +265,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     //New(),
                     Container(
-                       height: 500,
+                       //height: 500,
                       child: ListView.builder(
                         shrinkWrap: true,
 
@@ -320,6 +408,9 @@ class HomeScreen extends StatelessWidget {
                     image: '${recentItems.image}',
                     rate:   '${recentItems.rate}',
                     recipeName:'${recentItems.name}',
+                    prices: recentItems.prices,
+                      categoryName:"${recentItems.categoryName}" ,
+                    type:"${recentItems.type}" ,
                   )));
             },
             child: Row(
@@ -365,7 +456,7 @@ class HomeScreen extends StatelessWidget {
                               const Icon(
                                 Icons.star,
                                 color: Colors.deepOrange,
-                                size: 20,
+                                size: 17,
                               ),
                               Text(
                                 '${recentItems.rate}',
@@ -389,14 +480,21 @@ class HomeScreen extends StatelessWidget {
                           ),
                            Row(
                             children: [
-                              const Text(
-                                'Burger',
+                               Text(
+                                '${recentItems.type}',
                                 style: TextStyle(
                                     color: Color(0xff4A4B4D),
                                     fontSize: 12),
                               ),
                               const SizedBox(
                                 width: 3,
+                              ),
+                              Container(
+                                width: 3,
+                                height: 3,
+                                decoration: BoxDecoration(
+                                    color: AppColors.kPrimaryColor,
+                                    borderRadius: BorderRadius.circular(20)),
                               ),
                               Text(
                                 '${recentItems.categoryName}',
@@ -416,4 +514,30 @@ class HomeScreen extends StatelessWidget {
             ),
           )
         );
+
+
+  Widget scrollCategory(CarousalModel model)=>Container(
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15)
+    ),
+    child: Column(
+        children: [
+          Image.asset(model.image,
+            width: 300,
+            fit: BoxFit.cover,),
+          Text(model.text)
+        ],
+      ),
+
+  );
+        // Column(
+        //   children: [
+        //     Image.network('https://media.gettyimages.com/id/129748962/photo/people-dining-inside-an-osteria.jpg?s=612x612&w=gi&k=20&c=ZxM7h_pz08Z7o1xnnRQ_KlnCsYN27yJePiT6r-jFw-s=',
+        //       width: 300,
+        //       fit: BoxFit.cover,),
+        //     Text('italian')
+        //   ],
+        // ),
+
+
   }

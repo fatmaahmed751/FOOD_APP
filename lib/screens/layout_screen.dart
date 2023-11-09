@@ -44,6 +44,7 @@ class LayoutScreen extends StatelessWidget {
             elevation: 30,
             // height: 70,
             child: BottomNavigationBar(
+              elevation: 7.0,
               type: BottomNavigationBarType.fixed,
               selectedItemColor: AppColors.kPrimaryColor,
               unselectedItemColor: AppColors.labelColor,

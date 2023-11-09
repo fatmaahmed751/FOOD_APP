@@ -17,9 +17,12 @@ import 'package:restaurant_app/shared/bloc_observer.dart';
 import 'package:restaurant_app/widgets/menu_categories_section.dart';
 
 import 'controllers/register_cubit/register_cubit.dart';
+import 'screens/carousal_widget_model.dart';
+import 'screens/check_out_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/item_details.dart';
 import 'screens/layout_screen.dart';
+import 'screens/more_screen.dart';
 import 'screens/new.dart';
 import 'screens/offers_screen.dart';
 import 'screens/on_board_screen.dart';
@@ -47,17 +50,17 @@ class MyApp extends StatelessWidget {
         builder: (BuildContext context, Widget? child) {
           return MultiBlocProvider(
             providers:[
-              BlocProvider(create: (context) =>AppCubit()..getNotification()..getData()..getRestaurant()..getPosition(),
+              BlocProvider(create: (context) =>AppCubit()..getNotification()..getData()..getRestaurant()..getRecentItems()..getPosition(),
               ),
               BlocProvider(create: (context) =>AppLoginCubit()
               ),
-          BlocProvider(create: (context) =>AppRegisterCubit())
+          BlocProvider(create: (context) =>AppRegisterCubit()),
 
           ],
             child: BlocConsumer<AppCubit,AppStates>(
               listener:  (context,state){},
               builder: (context,state){
-                return  MaterialApp(
+                return   MaterialApp(
                   home: SignUpScreen(),
                   // initialRoute: AppRouts.initialRoute,
                   debugShowCheckedModeBanner: false,

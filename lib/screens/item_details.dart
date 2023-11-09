@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:restaurant_app/shared/components/app_colors.dart';
 import 'package:restaurant_app/shared/components/app_fonts.dart';
@@ -8,27 +9,52 @@ import 'package:restaurant_app/controllers/app_bloc/cubit.dart';
 import '../controllers/app_bloc/states.dart';
 import '../widgets/custom_app_bar_two.dart';
 import '../widgets/custom_text.dart';
+import 'my_order_screen.dart';
 
 
 class ItemDetails extends StatefulWidget{
-  const ItemDetails({super.key,required this.image, required this.recipeName, required this.rate});
+    const ItemDetails({super.key,required this.image, required this.recipeName, required this.rate,
+  required this.prices,required this.categoryName,
+   required this.type});
   final String image;
   final String recipeName;
   final String rate;
-
+ final double prices;
+ final String categoryName;
+ final String type;
   @override
   State<ItemDetails> createState() => _ItemDetailsState();
 }
 
 class _ItemDetailsState extends State<ItemDetails> {
-  //final String image;
+  int quantity=1;
+  int price = 0;
+  late final ratingController;
+  late double rating;
+
+  double userRating = 3.0;
+  int ratingBarMode = 1;
+  double initialRating = 2.0;
+  bool isRTLMode = false;
+  bool isVertical = false;
+
+  IconData? selectedIcon;
+
+  @override
+  void initState() {
+    super.initState();
+    ratingController = TextEditingController(text: '3.0');
+    rating = initialRating;
+  }
+
   @override
   Widget build(BuildContext context) {
-    double prices=750;
-    double price=0;
+     int price = 0;
+     int calculatePrice(int numberOfPieces, double pricePerPiece) {
+       return (numberOfPieces * pricePerPiece).toInt();
+     }
 
-
-      return SafeArea(
+    return SafeArea(
         top: false,
         child: Scaffold(
           body: CustomScrollView(
@@ -43,6 +69,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                       width: double.maxFinite,
                       fit: BoxFit.cover,),
                   ),
+
                   expandedHeight: 280,
                 ),
 
@@ -68,6 +95,26 @@ class _ItemDetailsState extends State<ItemDetails> {
                         const SizedBox(
                           height: 5,
                         ),
+                    RatingBar.builder(
+                      initialRating: initialRating,
+                      minRating: 1,
+                      direction: isVertical ? Axis.vertical : Axis.horizontal,
+                      allowHalfRating: true,
+                      unratedColor: AppColors.kPrimaryColor.withOpacity(0.2),
+                      itemCount: 5,
+                      itemSize: 20.0,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                      itemBuilder: (context,index ) => Icon(
+                        selectedIcon ?? Icons.star,
+                        color: AppColors.kPrimaryColor,
+                      ),
+                      onRatingUpdate: (rating) {
+                        setState(() {
+                          rating = rating;
+                        });
+                      },
+                      updateOnDrag: true,
+                    ),
                         Row(
                           children: [
                             Icon(
@@ -78,7 +125,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                             CustomText(
                               text: '${widget.rate} Star Ratings',
                               color: AppColors.kPrimaryColor,
-                              size: AppFontSize.s16,
+                              size: AppFontSize.s14,
                             ),
                             const SizedBox(
                               width: 5,
@@ -87,7 +134,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                              Column(
                               children: [
                                 CustomText(
-                                  text: 'Rs.$prices',
+                                  text: 'Rs.\$${widget.prices.toInt()}',
                                   fontWeight: FontWeight.bold,
                                   size: 25,
                                 ),
@@ -131,19 +178,23 @@ class _ItemDetailsState extends State<ItemDetails> {
                           width: 333.h,
                           height: 45,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0
-
+                            borderRadius: BorderRadius.circular(5.0),
+    color: AppColors.lightGrey.withOpacity(.2),
                             ),
-                          ),
-                          child: const Padding(
+
+                          child:  Padding(
                             padding: EdgeInsets.only(left: 3.0),
                             child: Row(
                               children: [
+                                SizedBox(width: 7,),
                                 CustomText(
                                     text: '- Select the size of portion -',
                                     size: AppFontSize.s14),
                                 Spacer(),
-
+                                IconButton(
+                                  icon:Icon(Icons.arrow_drop_down),
+                                  onPressed: (){},
+                                ),
                               ],
                             ),
 
@@ -159,15 +210,19 @@ class _ItemDetailsState extends State<ItemDetails> {
 
                             ),
                           ),
-                          child: const Padding(
+                          child:  Padding(
                             padding: EdgeInsets.only(left: 3.0),
                             child: Row(
                               children: [
+                                SizedBox(width: 7,),
                                 CustomText(
                                     text: '- Select the ingredients -',
                                     size: AppFontSize.s14),
                                 Spacer(),
-
+IconButton(
+  icon:Icon(Icons.arrow_drop_down),
+  onPressed: (){},
+),
 
                               ],
                             ),
@@ -188,8 +243,20 @@ class _ItemDetailsState extends State<ItemDetails> {
                                   const Spacer(),
                                   GestureDetector(
                                     onTap: (){
-                                      price = prices/2;
-                                      print(price);
+                                      setState(() {
+                                        quantity--;
+                                        print(quantity);
+
+                                       // widget.prices-=widget.prices;
+                                        //price = widget.prices;
+
+                                      });
+                                      if(quantity<1){
+                                        quantity = 1;
+                                        print('rrrrrrrrrrrrrrr');
+                                      }
+
+                                      //print(price);
                                     },
                                     child: Container(
                                       width: 50,
@@ -224,7 +291,7 @@ class _ItemDetailsState extends State<ItemDetails> {
 
                                     ),
                                     child: Center(
-                                      child: Text('1',
+                                      child: Text("$quantity",
                                         style: TextStyle(
                                             color: AppColors.kPrimaryColor,
                                             fontSize: 15),),
@@ -234,9 +301,19 @@ class _ItemDetailsState extends State<ItemDetails> {
 
                                   GestureDetector(
                                     onTap: (){
-                                      prices*=2;
-                                      price =prices;
-                                      print(price);
+
+
+                                         setState(() {
+                                           quantity++;
+                                           print(quantity);
+                                         });
+
+                                      // widget.prices*=2;
+                                      //  price = widget.prices;
+                                        //print(price);
+
+                                      //quantity = quantity+1;
+
 
                                     },
                                     child: Container(
@@ -304,16 +381,19 @@ class _ItemDetailsState extends State<ItemDetails> {
                                           fontWeight: FontWeight.w400,
                                           size: 14,),
                                            TextButton(
-                                             child: Text('$price'),
-                                             onPressed: (){
-                                               setState(() {
-                                                 prices*=2;
-                                                 price =prices;
-                                                 print(price);
-                                                 price;
-                                               });
+                                             onPressed:(){
+                                               // setState(() {
+                                                  price = calculatePrice((quantity), widget.prices);
+                                               // });
                                              },
+                                             child:Text('LKR \$${calculatePrice((quantity), widget.prices)}',
+                                           style:TextStyle(
+                                             color: Colors.black,
+                                             fontWeight: FontWeight.bold,
+                                            fontSize: 22,
                                            ),
+                                             ),
+                                             ),
                                         // CustomText(text: '$price',
                                         //   fontWeight: FontWeight.bold,
                                         //   size: 18,),
@@ -335,8 +415,30 @@ class _ItemDetailsState extends State<ItemDetails> {
                                               mainAxisAlignment: MainAxisAlignment
                                                   .center,
                                               children: [
-                                                IconButton(
-                                                    onPressed: () {},
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      print('iiiiiiiiiiiiiiiiiiii');
+
+                                                     Navigator.push(context,
+                                                          MaterialPageRoute(builder: (context) =>  MyOrderScreen(
+                                                           image: widget.image,
+                                                           rate:
+                                                            widget.rate,
+                                                           recipeName:
+                                                            widget.recipeName,
+                                                           prices:
+                                                            widget.prices,
+                                                             categoryName:
+                                                           widget.categoryName ,
+                                                         type:
+                                                           widget.type ,
+                                                            price:
+                                                            //price.toDouble()
+                                                            calculatePrice((quantity), widget.prices).toDouble(),
+                                                          )
+                                                          )
+                                                      );
+                                                    },
                                                     icon: Icon(
                                                       Icons.shopping_cart,
                                                       size: 22,

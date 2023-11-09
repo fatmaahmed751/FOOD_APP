@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_app/controllers/login_bloc/login_state.dart';
 import 'package:restaurant_app/controllers/register_cubit/register_state.dart';
@@ -22,7 +23,12 @@ Future<UserRegisterModel> firebaseAuthenticate(UserRegisterModel registerModel
           password: registerModel.password
 
       );
-    saveUserData(uId:auth.currentUser!.uid);
+    saveUserData(uId:auth.currentUser!.uid,
+      name: registerModel.name,
+       // auth.currentUser.toString(),
+   // phone: auth.currentUser!.phoneNumber!,
+   //    email: auth.currentUser!.email!,
+    );
 
     emit(AppRegisterSuccessState());
 // print(registerModel.uId);
@@ -41,7 +47,7 @@ Future<UserRegisterModel> firebaseAuthenticate(UserRegisterModel registerModel
       print('The account already exists for that email.');
     }
   } catch (e) {
-    emit(AppRegisterErrorState());
+   // emit(AppRegisterErrorState());
     print(e.toString());
 
   }
@@ -49,17 +55,28 @@ Future<UserRegisterModel> firebaseAuthenticate(UserRegisterModel registerModel
   return registerModel;
 
 }
+///TODO
+  ///to save user data in firestore i must to do method creatuser with uid
 
+  Future<UserRegisterModel> saveUserData({
 
-  void saveUserData({
     required String uId,
+    required String name,
+    // required String phone,
+    // required String email,
 })async{
     UserRegisterModel userRegisterModel=UserRegisterModel(
     );
     await FirebaseFirestore.instance.collection('users').
     doc(uId).
     set({
-     "uId" :userRegisterModel.uId
+     "uId" :userRegisterModel.uId,
+      "name" :userRegisterModel.name,
+      // "email" :userRegisterModel.email,
+      // "password" :userRegisterModel.password,
+      // "confirmPassword" :userRegisterModel.confirmPassword,
+      // "phone" :userRegisterModel.phone,
+
     }).then((value) {
       print(uId);
       emit(AppCreateSuccessState());
@@ -67,6 +84,7 @@ Future<UserRegisterModel> firebaseAuthenticate(UserRegisterModel registerModel
       //emit(AppCreateErrorState());
       print(e.toString());
     });
+    return userRegisterModel;
   }
 
 

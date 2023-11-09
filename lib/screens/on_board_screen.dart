@@ -119,8 +119,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 30,),
-            //orangeButton(text: 'Next', function:(){}),
+            const SizedBox(height: 20,),
+            orangeButton(text: 'Next', function:(){}),
           ],
         ),
       );

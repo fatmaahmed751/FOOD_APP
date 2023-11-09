@@ -41,7 +41,7 @@ class AppCubit extends Cubit<AppStates> {
     const OffersScreen(),
     const HomeScreen(),
     const ProfileScreen(),
-    const MoreScreen(),
+      MoreScreen(),
   ];
 
   void changeBottomNav(int index) {
@@ -82,15 +82,39 @@ class AppCubit extends Cubit<AppStates> {
         .get().then((value) {
       value.docs.forEach((element) {
         recentModel.add(RecentItemModel.fromJson(element.data()));
+        print(element.data()['ingredients']);
       });
       emit(GetRecentItemsSuccessState());
-      print(recentModel);
+     // print(element.data());
     }).catchError((error) {
       emit(GetRecentItemsErrorState());
       print(error.toString());
     });
   }
+void getSubCollection(){
+  FirebaseFirestore.instance.collection('recent_items')
+      .get().then((value) {
+    value.docs.forEach((element) {
+    FirebaseFirestore.instance.collection('recent_items')
+        .doc(element.id).collection('ingredients').get().
+        then((value) {
+      value.docs.forEach((element) {
+        recentModel.add(RecentItemModel.fromJson(element.data()));
 
+        print(element.data());
+      });
+      emit(GetRecentItemsSuccessState());
+    }) .catchError((error){
+      emit(GetRecentItemsErrorState());
+      //print(error.toString());
+    });
+   // });
+
+      recentModel.add(RecentItemModel.fromJson(element.data()));
+      print(element.data().toString());
+});
+        });
+      }
   Future getNotification()async{
     String? myToken = await FirebaseMessaging.instance.getToken();
     print('=====================================');
