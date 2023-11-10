@@ -13,6 +13,7 @@ import '../models/register_model.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
+  //var nameController = TextEditingController();
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -20,14 +21,15 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   UserRegisterModel registerModel = UserRegisterModel(
+
   );
-  TextEditingController nameController = TextEditingController();
+  var nameController = TextEditingController();
+
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confiemPasswordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     // return BlocConsumer<HomeCubit, HomeState>(
@@ -39,6 +41,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       listener: (context,state){},
      builder: (context,state){
        AppRegisterCubit cubit = AppRegisterCubit.get(context);
+       var userModel = AppRegisterCubit.get(context).registerModel;
+       nameController.text = userModel.name!;
+       emailController.text = userModel.email;
        UserRegisterModel userRegisterModel=UserRegisterModel(
        );
        return Scaffold(
@@ -77,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                  ],
                ),
                screenSubText(
-                   text: 'Hi there ${registerModel.name}',
+                   text: 'Hi there ${userModel.name}',
                    fontSize: 16,
                    fontWeight: FontWeight.bold,
                    color: const Color(0xff4A4B4D)),
@@ -109,7 +114,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                    labelText: ('Email'),
                    hintText: 'Email',
                    type: TextInputType.text,
-                   controller: emailController),
+                 controller:emailController,
+                   //value: userModel.email,
+                   ),
                defaultFormField(
                    prefixIcon: Icon(
                      Icons.phone_android_outlined,

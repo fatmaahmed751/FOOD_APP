@@ -185,6 +185,7 @@ Widget defaultFormField({
  required Widget prefixIcon,
   Widget?suffixIcon,
    bool obscureText = false,
+ String? value,
 
 
 
@@ -208,6 +209,7 @@ obscureText: obscureText,
           textAlign: TextAlign.justify,
           validator: validator,
           keyboardType: type,
+          initialValue: value,
           controller: controller,
           decoration: InputDecoration(
             prefixIcon:prefixIcon ,

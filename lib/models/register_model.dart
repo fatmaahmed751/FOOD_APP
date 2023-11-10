@@ -9,7 +9,7 @@ class UserRegisterModel{
 
   UserRegisterModel({
 
-  this.name='',
+   this.name ='',
       this.email='',
       this.password='',
       this.address='',
@@ -31,4 +31,15 @@ class UserRegisterModel{
   );
 
 }
+  Map<String,dynamic> toMap(){
+   return{
+     'name' :name,
+     'address' :address,
+     'phone' :phone,
+     'email' :email,
+     'uId' :uId,
+
+   };
+  }
+
   }
