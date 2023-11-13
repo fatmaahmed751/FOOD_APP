@@ -6,6 +6,7 @@ import 'package:restaurant_app/widgets/custom_text.dart';
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({Key? key, required this.title}) : super(key: key);
   final String title;
+ // Color color = Color();
  // Widget? icon;
   @override
   Widget build(BuildContext context) {

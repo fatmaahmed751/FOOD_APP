@@ -20,6 +20,12 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  // MyAncestor _ancestor;
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   _ancestor = dependOnInheritedWidgetOfExactType<MyAncestor>();
+  // }
   GlobalKey<FormState>  formKey=GlobalKey();
 
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -156,17 +162,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               child: orangeButton(
                                   text: 'Sign Up', function:()async {
                                 if (formKey.currentState!.validate()) {
-                                  registerModel=UserRegisterModel(
+                                  registerModel= UserRegisterModel(
                                     email:emailController.text,
                                     password: passwordController.text,
+                                     phone: phoneController.text,
+                                     name:nameController.text,
+                                     address: addressController.text,
+                                     confirmPassword: confirmPasswordController.text
                                      // uId:'',
                                   );
                                   cubit.firebaseAuthenticate(registerModel!);
+                                  //cubit.getUserData(registerModel!);
+                                  print(registerModel!.phone);
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=>LayoutScreen()));
                                 }else{
                                   print('not valide');
                                 }
-
                               }
                               ),
                             ),
@@ -205,5 +216,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             }
         ));
   }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   AppRegisterCubit.get(context).close();
+  // }
 }
 

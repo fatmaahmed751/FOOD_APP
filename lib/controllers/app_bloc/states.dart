@@ -24,6 +24,12 @@ class GetMyOrderLoadingState extends AppStates {}
 
 class GetMyOrderErrorState extends AppStates {}
 
+class AppGetUserDataSuccessState extends AppStates{}
+
+class AppGetUserDataErrorState extends AppStates{}
+
+
+
 
 class GetRestaurantSuccessState extends AppStates {}
 

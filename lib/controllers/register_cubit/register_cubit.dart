@@ -16,32 +16,29 @@ class AppRegisterCubit extends Cubit<RegisterStates> {
 
   // final DatabaseReference _userRef =
   // FirebaseDatabase.instance.ref().child('users');
+
   FirebaseAuth auth = FirebaseAuth.instance;
-  UserRegisterModel registerModel = UserRegisterModel(
-  );
+  UserRegisterModel registerModel = UserRegisterModel();
 
   Future<UserRegisterModel> firebaseAuthenticate(
       UserRegisterModel registerModel) async {
     try {
-      emit(AppRegisterInitialState());
+      //emit(AppRegisterSuccessState());
       await auth.createUserWithEmailAndPassword(
           email: registerModel.email,
-          password: registerModel.password
-
-      );
-      emit(AppRegisterSuccessState());
+          password: registerModel.password);
       saveUserData(
-        uId: auth.currentUser!.uid,
-        name: registerModel.name,
-        email: registerModel.email,
-        phone: registerModel.phone
+          uId: auth.currentUser!.uid,
+          name: registerModel.name,
+          email: registerModel.email,
+          phone: registerModel.phone
       );
 
       print(auth.currentUser!.email);
       print(auth.currentUser!.uid);
-      print(auth.currentUser!.displayName);
-      print('jjjjjjjjjjjj');
-//if(response.user != null) {
+      print(registerModel.name);
+      print('jjjjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkk');
+
 
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -59,13 +56,7 @@ class AppRegisterCubit extends Cubit<RegisterStates> {
 
   ///TODO
   ///to save user data in firestore i must to do method creatuser with uid
-  // Future<void> saveUserData(UserRegisterModel user) async {
-  //   await _userRef.child(user.uId).set(user.toMap()).then((value) {
-  //     emit(AppCreateSuccessState());
-  //   }).catchError((e){
-  //     print(e.toString());
-  //   });
-  // }
+
   Future<UserRegisterModel> saveUserData({
     required String uId,
     required String name,
@@ -84,11 +75,13 @@ class AppRegisterCubit extends Cubit<RegisterStates> {
       print(uId);
       emit(AppCreateSuccessState());
     }).catchError((e) {
-      //emit(AppCreateErrorState());
+     // emit(AppCreateErrorState());
       print(e.toString());
     });
     return userRegisterModel;
   }
+
+
 
 }
 

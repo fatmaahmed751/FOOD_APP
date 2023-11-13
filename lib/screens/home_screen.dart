@@ -208,7 +208,7 @@ class HomeScreen extends StatelessWidget {
                         autoPlayAnimationDuration: const Duration(seconds:1),
                         autoPlayCurve: Curves.fastOutSlowIn,
                         scrollDirection: Axis.horizontal,
-                         viewportFraction: 1.0
+                         viewportFraction: 0.9
                     ),
                     ),
                     const SizedBox(

@@ -23,16 +23,19 @@ class DessertsScreen extends StatelessWidget {
           AppCubit cubit = AppCubit.get(context);
            var desserts = AppCubit.get(context).dessertsModel;
          return Scaffold(
-            body: ListView(
-              children: [
-                const CustomAppBarTwo(
-                  title: 'Desserts',
-                ),
-                const SearchBarWidget(),
-                SingleChildScrollView(
-                  child: Container(
-                    height: 600.h,
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: 40,),
+                  const CustomAppBarTwo(
+                    title: 'Desserts',
+                  ),
+                  const SearchBarWidget(),
+                  Container(
+                   // height: 800.h,
                     child: ListView.separated(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) => dessertContainer(desserts[index]),
                         separatorBuilder: (context, index) =>
                         const SizedBox(
@@ -40,9 +43,9 @@ class DessertsScreen extends StatelessWidget {
                         ),
                         itemCount: desserts.length,
                   )
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           );
 

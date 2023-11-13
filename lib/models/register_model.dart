@@ -12,7 +12,7 @@ class UserRegisterModel{
    this.name ='',
       this.email='',
       this.password='',
-      this.address='',
+      this.address='jjjjjjjjjjjjjjjjj',
       this.confirmPassword='',
       this.phone='',
      this.uId=''
@@ -24,9 +24,9 @@ class UserRegisterModel{
       email:json['email'],
       phone:json['phone'],
       uId:json['uId'],
-      confirmPassword:json['confirmPassword'],
+     // confirmPassword:json['confirmPassword'],
       address:json['address'],
-      password:json['password'],
+     // password:json['password'],
 
   );
 

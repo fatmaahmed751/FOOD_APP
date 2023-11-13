@@ -36,10 +36,22 @@ Future<UserLoginModel> firebaseAuthenticate(BuildContext context,UserLoginModel 
       print(auth.currentUser!.uid);
         print('jjjjjjjjjjjj');
        // saveUserData(response);
-   var user = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(response.user?.uid)
-        .get();
+    fetchUserData();
+   //  await FirebaseFirestore.instance.collection('users').doc(auth.currentUser!.uid)
+   //      .get().then((value) {
+   //   // registerModel = UserRegisterModel.fromJson(value.data()!);
+   //    print(value.data());
+   //    print('ooooooooooooooooooooooooooooooooooooooooooooooooo');
+   //    print(value.data());
+   //   // emit(AppGetUserDataSuccessState());
+   //  }).catchError((error) {
+   //    print(error.toString());
+   //  });
+   // var user = await FirebaseFirestore.instance
+   //      .collection('users')
+   //      .doc(response.user?.uid)
+   //      .get();
+
   }
    on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
@@ -53,11 +65,20 @@ Future<UserLoginModel> firebaseAuthenticate(BuildContext context,UserLoginModel 
   }
   return model;
 }
+  Future<void> fetchUserData() async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+    await FirebaseFirestore.instance.collection('users').doc(userId).get();
+
+    if (!documentSnapshot.exists) {
+      emit(AppUserFetchDataErrorState());
+      return;
+    }
+
+    Map<String, dynamic> data = documentSnapshot.data()!;
+    UserRegisterModel userRegisterModel = UserRegisterModel.fromJson(data);
+    emit(AppUserFetchDataSuccessState(userRegisterModel: userRegisterModel));
 
 
-
-
-
-
-
+  }
 }

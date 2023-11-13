@@ -31,7 +31,7 @@ class CustomAppBarTwo extends StatelessWidget {
               icon: const Icon(
                 Icons.shopping_cart,
                 size: 22,
-              //  color: Colors.white,
+              //  color: Colors.transparent,
               ))
 
         ],

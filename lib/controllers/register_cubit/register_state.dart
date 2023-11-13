@@ -12,3 +12,5 @@ class AppRegisterErrorState extends RegisterStates{}
 class AppCreateSuccessState extends RegisterStates{}
 
 class AppCreateErrorState extends RegisterStates{}
+
+
